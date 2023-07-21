@@ -3,7 +3,7 @@
    SPDX-License-Identifier: CC-BY-SA-4.0
 -->
 
-This is a simple system to demonstrate a timer driver and a client on top of the [seL4 Core
+This is a simple system to demonstrate a passieve timer driver and a client on top of the [seL4 Core
 Platform](https://github.com/BreakawayConsulting/sel4cp) on an odroidC2. The client application
 requests a timeout every second. The API to set a timeout or get the current time can be found
 in `timer.h`.
