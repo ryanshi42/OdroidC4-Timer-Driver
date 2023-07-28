@@ -10,7 +10,7 @@ uintptr_t gpt_regs;
 
 #define BIT(n) (1ul<<(n))
 
-#define TIMER_REG_START   0x940    // TIMER_MUX
+#define TIMER_REG_START   0x140    // TIMER_MUX
 
 #define TIMER_A_INPUT_CLK 0
 #define TIMER_E_INPUT_CLK 8
