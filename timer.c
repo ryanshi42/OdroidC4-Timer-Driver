@@ -1,4 +1,5 @@
 #include <stdint.h>
+// #include <stdio.h>
 #include <sel4cp.h>
 
 uintptr_t gpt_regs;
@@ -58,6 +59,27 @@ static bool timeout_active = false;
 static uint64_t current_timeout;
 static uint8_t pending_timeouts;
 
+char* itoa(int i, char b[]){
+    char const digit[] = "0123456789";
+    char* p = b;
+    if(i<0){
+        *p++ = '-';
+        i *= -1;
+    }
+    int shifter = i;
+    do{ //Move to where representation ends
+        ++p;
+        shifter = shifter/10;
+    }while(shifter);
+    *p = '\0';
+    do{ //Move back, inserting digits as u go
+        *--p = digit[i%10];
+        i = i/10;
+    }while(i);
+    return b;
+}
+
+
 static uint64_t
 get_ticks(void)
 {
@@ -69,6 +91,9 @@ get_ticks(void)
     }
 
     uint64_t ticks = (high << 32) | low;
+    char snum[10];
+    sel4cp_dbg_puts(itoa(ticks, snum));
+
     return ticks * NS_IN_US;
 }
 
@@ -93,6 +118,7 @@ irq(sel4cp_channel ch)
 
     if (pending_timeouts && !timeout_active) {
         uint64_t curr_time = get_ticks();
+        // printf("The current time is: %ld\n", curr_time);
         /* find next timeout */
         uint64_t next_timeout = UINT64_MAX;
         sel4cp_channel ch = -1;
