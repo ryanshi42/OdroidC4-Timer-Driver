@@ -93,6 +93,7 @@ get_ticks(void)
     uint64_t ticks = (high << 32) | low;
     char snum[10];
     sel4cp_dbg_puts(itoa(ticks, snum));
+    sel4cp_dbg_puts("\n");
 
     return ticks * NS_IN_US;
 }
